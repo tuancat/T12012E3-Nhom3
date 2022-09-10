@@ -1,5 +1,7 @@
 package com.sam.lab4;
 
+import com.sam.lab4.service.CustomeUserDetailService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -16,8 +18,8 @@ import org.springframework.security.web.authentication.rememberme.PersistentToke
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     PersistentTokenRepository tokenRepository=new InMemoryTokenRepositoryImpl();
-//    @Qualifier("customUserDetailService")
-//    private CustomeUserDetailService customeUserDetailService;
+    @Qualifier("customUserDetailService")
+    private CustomeUserDetailService customeUserDetailService;
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
@@ -25,30 +27,25 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         return bCryptPasswordEncoder;
     }
 
-//    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
-////        auth.userDetailsService(customeUserDetailService).passwordEncoder(passwordEncoder());
-//        auth.authenticationProvider(authenticationProvider());
-//    }
-
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().withUser("user1")
-                .password("$2a$10$wGKp6xjURxyvv.RGX4TbMeIzYbLamlj1tQNEXhTxuceKFffwUipSa").roles("USER");
+    public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(customeUserDetailService).passwordEncoder(passwordEncoder());
     }
+
+
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // Các trang không yêu cầu login
-        http.authorizeRequests().antMatchers("/","/login","/user/login", "/user/logout", "/logout").permitAll();
-        http.authorizeRequests().antMatchers( "/user/**").access("hasAnyRole('ROLE_USER')");
+        http.authorizeRequests().antMatchers("/","/login","/user/login", "/user/logout", "/logout", "/mail/**").permitAll();
+        http.authorizeRequests().antMatchers("/user/**").access("hasAnyRole('ROLE_USER')");
 
         // Cấu hình cho Login Form.
         http.authorizeRequests().and().formLogin()//
                 // Submit URL của trang login
                 .loginProcessingUrl("/j_spring_security_check") // Submit URL
                 .loginPage("/user/login")//
-                .defaultSuccessUrl("/user/list")//
+                .defaultSuccessUrl("/user/user-list")//
                 .failureUrl("/user/login?error=true")//
                 .usernameParameter("username")//
                 .passwordParameter("password").and().rememberMe().rememberMeParameter("remember-me")
