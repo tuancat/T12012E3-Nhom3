@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      lang="en" layout:decorate="~{layout/main}">
+<body>
+<div layout:fragment="content">
+
+    <div class="container">
+        <div class="row">
+            <h2>Thêm User</h2>
+        </div>
+        <div class="row">
+            <div class="col">
+                <form th:action="@{/user/save-user}" th:object="${user}" method="POST">
+                    <div class="form-group">
+                        <label >FirstName:</label>
+                        <input type="text" class="form-control" th:field="*{fullName}">
+                    </div>
+                    <div class="form-group">
+                        <label >LastName:</label>
+                        <input type="text" class="form-control" th:field="*{userName}">
+                    </div>
+                    <div class="form-group">
+                        <label >Email:</label>
+                        <input type="password" class="form-control" th:field="*{pass}">
+                    </div>
+                    <div class="form-group">
+                        <label >Phone:</label>
+                        <input type="email" class="form-control" th:field="*{email}">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="form-control" value="Submit">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+</body>
+</html>

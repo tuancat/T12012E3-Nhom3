@@ -1,10 +1,38 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      lang="en"  layout:decorate="~{layout/main}">
+      lang="en" layout:decorate="~{layout/main}">
 <body>
 <div layout:fragment="content">
-
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <h1>Quan Ly User</h1>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table class="table table-hover table-responsive">
+                    <thead>
+                    <th>ID</th>
+                    <th>Full Name</th>
+                    <th>User Name</th>
+                    <th>Email</th>
+                    <th>Action</th>
+                    </thead>
+                    <tbody>
+                    <tr th:each="ul:${userList}">
+                        <td th:utext="${ul.id}"></td>
+                        <td th:utext="${ul.fullName}"></td>
+                        <td th:utext="${ul.userName}"></td>
+                        <td th:utext="${ul.email}"></td>
+                        <td><a th:href="@{/admin/sendmail/{id}(id=${ul.id})}">Detail</a></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>
