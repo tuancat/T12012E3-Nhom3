@@ -34,17 +34,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication().withUser("user1")
-                .password("$2a$10$t91y6AKiCADSeED6JlFGveBNaClYhDj.bCxAKjzoRPK1HkYp9ejgy").roles("USER");
-        auth.inMemoryAuthentication().withUser("admin")
-                .password("admin").roles("ADMIN");
+                .password("$2a$10$wGKp6xjURxyvv.RGX4TbMeIzYbLamlj1tQNEXhTxuceKFffwUipSa").roles("USER");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // Các trang không yêu cầu login
         http.authorizeRequests().antMatchers("/","/login","/user/login", "/user/logout", "/logout").permitAll();
-        http.authorizeRequests().antMatchers("/product/**", "/user/**").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
-        http.authorizeRequests().antMatchers("/admin/**").access("hasRole('ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers( "/user/**").access("hasAnyRole('ROLE_USER')");
 
         // Cấu hình cho Login Form.
         http.authorizeRequests().and().formLogin()//

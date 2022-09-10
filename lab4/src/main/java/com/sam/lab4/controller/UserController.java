@@ -18,7 +18,7 @@ import javax.validation.Valid;
 public class UserController {
     @Autowired
     private UserService userService;
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/user-list", method = RequestMethod.GET)
     public String list(Model model) {
         model.addAttribute("userList", userService.userList());
         return "/user/user-list";

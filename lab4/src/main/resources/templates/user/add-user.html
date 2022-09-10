@@ -7,26 +7,33 @@
 
     <div class="container">
         <div class="row">
-            <h2>Thêm User</h2>
+            <div class="col">
+                <h2>Thêm User</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <a class="btn btn-primary" th:href="@{/user/user-list}">Get Back</a>
+            </div>
         </div>
         <div class="row">
             <div class="col">
                 <form th:action="@{/user/save-user}" th:object="${user}" method="POST">
                     <div class="form-group">
-                        <label >FirstName:</label>
+                        <label>Full Name:</label>
                         <input type="text" class="form-control" th:field="*{fullName}">
                     </div>
                     <div class="form-group">
-                        <label >LastName:</label>
+                        <label>User Name:</label>
                         <input type="text" class="form-control" th:field="*{userName}">
                     </div>
                     <div class="form-group">
-                        <label >Email:</label>
-                        <input type="password" class="form-control" th:field="*{pass}">
+                        <label>Email:</label>
+                        <input type="email" class="form-control" th:field="*{email}">
                     </div>
                     <div class="form-group">
-                        <label >Phone:</label>
-                        <input type="email" class="form-control" th:field="*{email}">
+                        <label>Password:</label>
+                        <input type="password" class="form-control" th:field="*{pass}">
                     </div>
                     <div class="form-group">
                         <input type="submit" class="form-control" value="Submit">
